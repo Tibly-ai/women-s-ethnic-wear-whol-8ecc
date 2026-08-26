@@ -1,0 +1,6 @@
+/*
+ * Compatibility stylesheet.
+ * Catalogue and shared page styles now live in main.css and pages.css.
+ * This file remains because existing pages reference it; keeping it prevents
+ * a site-wide 404 without duplicating the current design system rules.
+ */

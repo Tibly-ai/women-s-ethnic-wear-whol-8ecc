@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/e42c4ad4f0707392a25a0062bfcd3dff.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/50a44e8bffadfc57130ad50b41b52f97.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/cf864e422bd1c7511960627b58c901eb.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/6d4c25be5cac7d9d932d50e74d215feb.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/4cfcf0ba02ce40d1cc304c4419e3071c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/941c69ec2383f7c9c44ec6880fc35652.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://br-winter-boat-ajcnusyq.storage.c-3.us-east-2.aws.neon.tech/tibly-site-media/sites/3fa694af-6bdc-4ef7-b4ec-b3266486d5b0/73e2695810227cd20eece94235ef7f5c.ttf) format('truetype');
+}

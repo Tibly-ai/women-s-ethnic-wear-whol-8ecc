@@ -1,0 +1,2184 @@
+/* =====================================================================
+   BrownBarry — main.css (Optimized Single Bundle — No @import Waterfall)
+   ===================================================================== */
+
+/* --- variables.css --- */
+/* =====================================================================
+   BrownBarry — Design Tokens  (Design System v1.0 §2–§7, §10)
+   ---------------------------------------------------------------------
+   Single source of truth. Every value elsewhere references these.
+   Do NOT hardcode colors, sizes, spacing, or motion elsewhere.
+   ===================================================================== */
+
+:root {
+  /* =================================================================
+     COLOR — Brand: Cocoa (warm espresso brown)  [DS §2.2]
+     ================================================================= */
+  --cocoa-950: #1F140C;
+  --cocoa-900: #2A1D12;
+  --cocoa-800: #3B2A1E;  /* PRIMARY brand color */
+  --cocoa-700: #4D3829;  /* hover / strong headings */
+  --cocoa-600: #6B4F3A;  /* secondary text / icon active / focus */
+  --cocoa-500: #8A6B50;
+  --cocoa-400: #A88A6E;
+  --cocoa-300: #C5AC93;
+  --cocoa-200: #E0CFB8;
+  --cocoa-100: #F0E5D6;
+  --cocoa-50:  #F9F4EC;
+
+  /* =================================================================
+     COLOR — Neutral: Warm Stone  [DS §2.3]
+     ================================================================= */
+  --stone-950: #1A1714;
+  --stone-900: #28231E;
+  --stone-800: #3A342E;
+  --stone-700: #524A42;
+  --stone-600: #6B6258;
+  --stone-500: #857B70;
+  --stone-400: #A39A8E;
+  --stone-300: #C4BCB1;
+  --stone-200: #DDD7CE;
+  --stone-100: #ECE7DF;
+  --stone-50:  #F7F4EF;
+
+  /* =================================================================
+     COLOR — Accent: Forest (verification/trust — use sparingly) [DS §2.4]
+     ================================================================= */
+  --forest-900: #143025;
+  --forest-700: #1F4D38;
+  --forest-600: #2E6B4E;
+  --forest-500: #3D8463;
+  --forest-200: #BFDDCD;
+  --forest-50:  #EAF4EE;
+
+  /* =================================================================
+     COLOR — Semantic  [DS §2.5]
+     ================================================================= */
+  --success:        var(--forest-500);
+  --success-surface: var(--forest-50);
+  --warning:        #B8772A;
+  --warning-surface: #FBF0E0;
+  --error:          #A8362E;
+  --error-surface:  #F7E6E3;
+  --info:           var(--cocoa-700);
+  --info-surface:   var(--cocoa-100);
+
+  /* WhatsApp — BUTTON CTAs only (single-use exception) [DS C4] */
+  --whatsapp:       #0E8038;  /* was #25D366 (2.0:1 fail) → #0E8038 (5.04:1 WCAG AA pass with white text) */
+  --whatsapp-hover: #157A36;  /* 5.2:1 WCAG AA pass */
+  /* If white-on-whatsapp fails AA, use --whatsapp-button for fills */
+  --whatsapp-button: #0E8038;  /* was #1A8A47 (3.4:1 fail) → #0E8038 (5.04:1 WCAG AA pass) */
+
+  /* =================================================================
+     COLOR — Borders  [DS §2.6]
+     ================================================================= */
+  --border-default: var(--stone-200);
+  --border-strong:  var(--cocoa-300);
+  --border-subtle:  var(--stone-100);
+  --border-focus:   var(--cocoa-600);
+  --border-on-dark: var(--cocoa-500);
+
+  /* =================================================================
+     COLOR — Background hierarchy  [DS §2.7]
+     ================================================================= */
+  --bg-canvas:      var(--stone-50);     /* default page bg (warm white) */
+  --bg-surface:     #FFFFFF;             /* raised cards */
+  --bg-surface-alt: var(--cocoa-50);     /* alternating sections */
+  --bg-sunken:      var(--stone-100);
+  --bg-inverse:     var(--cocoa-900);    /* footer, dark sections */
+  --bg-overlay:     rgba(31, 20, 12, 0.60);  /* modal scrim */
+
+  /* =================================================================
+     TEXT colors (mapped)  [DS §2.2/§2.3]
+     ================================================================= */
+  --color-text:       var(--cocoa-800);
+  --color-text-muted: var(--stone-600);
+  --color-text-subtle: var(--stone-500);
+  --color-text-on-dark: var(--stone-300);
+  --color-text-on-brand: #FFFFFF;
+  --color-link:       var(--cocoa-700);
+  --color-focus:      var(--cocoa-600);
+
+  /* =================================================================
+     TYPOGRAPHY  [DS §3]
+     ================================================================= */
+
+  /* Font families (placeholders — wire up self-hosted fonts per DS §3.1) */
+  --font-display: "Fraunces", "Source Serif 4", Georgia, serif;   /* serif headings */
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", "Cascadia Code", "Consolas", monospace;
+
+  /* Weights (cap at 600) [DS T2] */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold: 600;
+  /* bold (700) reserved for rare in-text emphasis — use via utility, not default */
+
+  /* Type scale — fluid via clamp(), Major Third ≈1.25 [DS §3.2] */
+  --text-display-1: clamp(2.5rem, 1.8rem + 3vw, 4rem);    /* 40 → 64 */
+  --text-display-2: clamp(2.125rem, 1.6rem + 2.2vw, 3.25rem); /* 34 → 52 */
+  --text-h1:        clamp(1.875rem, 1.5rem + 1.6vw, 2.75rem);  /* 30 → 44 */
+  --text-h2:        clamp(1.625rem, 1.35rem + 1.2vw, 2.25rem); /* 26 → 36 */
+  --text-h3:        clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);  /* 22 → 28 */
+  --text-h4:        clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);/* 19 → 22 */
+  --text-body-lg:   clamp(1.125rem, 1.05rem + 0.3vw, 1.1875rem); /* 18 → 19 */
+  --text-base:      1rem;       /* 16 — never below for body */
+  --text-body-sm:   0.875rem;   /* 14 */
+  --text-caption:   0.8125rem;  /* 13 */
+  --text-overline:  0.75rem;    /* 12 */
+  --text-mono:      0.875rem;   /* 14 */
+
+  /* Letter spacing */
+  --tracking-tight:   -0.02em;  /* display */
+  --tracking-heading: -0.01em;  /* h1–h3 */
+  --tracking-normal:  0;
+  --tracking-caption: 0.01em;
+  --tracking-overline: 0.08em;  /* uppercase eyebrows */
+
+  /* Line heights */
+  --line-height-display: 1.1;
+  --line-height-tight:   1.25;
+  --line-height-heading: 1.3;
+  --line-height-body:    1.6;
+  --line-height-mobile:  1.65;
+  --line-height-caption: 1.4;
+
+  /* =================================================================
+     GRID & LAYOUT  [DS §4]
+     ================================================================= */
+  --container-max:   1200px;
+  --container-wide:  1440px;
+  --container-read:  720px;
+
+  --gutter-mobile:   16px;
+  --gutter-tablet:   24px;
+  --gutter-desktop:  32px;
+
+  --margin-outer-mobile: 20px;
+  --margin-outer-desktop: 40px;
+
+  /* Breakpoints (use in media queries — min-width, mobile-first) */
+  --bp-sm: 600px;
+  --bp-md: 900px;
+  --bp-lg: 1200px;
+  --bp-xl: 1440px;
+  --bp-2xl: 1920px;
+
+  /* =================================================================
+     SPACING scale — 4pt base, biased to 8pt multiples [DS §5.2]
+     ================================================================= */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;   /* section gap mobile */
+  --space-20: 80px;   /* section gap desktop */
+  --space-24: 96px;
+  --space-32: 128px;  /* hero gap desktop */
+
+  /* =================================================================
+     RADIUS  [DS §7.3]
+     ================================================================= */
+  --radius-none: 0;
+  --radius-sm:   4px;
+  --radius-md:   8px;    /* DEFAULT — buttons, inputs */
+  --radius-lg:   12px;   /* cards, modals */
+  --radius-xl:   16px;   /* feature cards, hero panels */
+  --radius-full: 9999px; /* badges, pills, FAB, avatars */
+
+  /* =================================================================
+     ELEVATION — warm-tinted shadows [DS §7.1]
+     rgba(31,20,12,...) — warm, not pure black
+     ================================================================= */
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px rgba(31, 20, 12, 0.06);
+  --elevation-2: 0 4px 12px rgba(31, 20, 12, 0.08);
+  --elevation-3: 0 8px 24px rgba(31, 20, 12, 0.10);
+  --elevation-4: 0 16px 40px rgba(31, 20, 12, 0.12);
+
+  /* =================================================================
+     MOTION  [DS §10]
+     ================================================================= */
+  --motion-instant:   0ms;
+  --motion-fast:      150ms;
+  --motion-base:      200ms;
+  --motion-slow:      300ms;
+  --motion-deliberate: 450ms;
+  --ease-out:         cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:      cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-quint:   cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-delay:     0ms;
+
+  /* =================================================================
+     COMPONENT defaults (sizing)  [DS §6]
+     ================================================================= */
+  --button-height-mobile: 44px;
+  --button-height-desktop: 48px;
+  --input-height: 48px;
+  --touch-target-min: 44px;
+  --nav-height-mobile: 56px;
+  --nav-height-desktop: 72px;
+  --nav-height-scrolled: 48px;
+
+  /* =================================================================
+     Z-INDEX scale (managed layers)
+     ================================================================= */
+  --z-base:     1;
+  --z-sticky:   100;
+  --z-header:   200;
+  --z-dropdown: 300;
+  --z-fab:      400;
+  --z-modal:    1000;
+  --z-toast:    1100;
+  --z-skip:     2000;
+}
+
+
+/* --- layout.css --- */
+/* =====================================================================
+   BrownBarry — layout.css
+   ---------------------------------------------------------------------
+   Grid, containers, section rhythm. Mobile-first. [DS §4, §5]
+   No component styling here.
+   ===================================================================== */
+
+/* =====================================================================
+   Containers
+   ===================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--margin-outer-mobile);
+}
+
+.container--wide {
+  max-width: var(--container-wide);
+}
+
+.container--read {
+  max-width: var(--container-read);
+}
+
+@media (min-width: 900px) {
+  .container {
+    padding-inline: var(--margin-outer-desktop);
+  }
+}
+
+/* =====================================================================
+   CSS Grid utilities (12-col desktop base) [DS §4.3]
+   ===================================================================== */
+
+.grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* Mobile default: single column */
+.grid--default {
+  grid-template-columns: 1fr;
+}
+
+/* Responsive column helpers (mobile-first) */
+@media (min-width: 600px) {
+  .grid--2\@sm { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .grid--2\@md { grid-template-columns: repeat(2, 1fr); }
+  .grid--3\@md { grid-template-columns: repeat(3, 1fr); }
+  .grid--4\@md { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .grid--3\@lg { grid-template-columns: repeat(3, 1fr); }
+  .grid--4\@lg { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* =====================================================================
+   Section rhythm [DS §5.5 — "breathe more than feels comfortable"]
+   ===================================================================== */
+
+section {
+  padding-block: var(--space-16); /* 64px mobile default */
+}
+
+@media (min-width: 900px) {
+  section {
+    padding-block: var(--space-20); /* 80px desktop */
+  }
+}
+
+.section--lg {
+  padding-block: var(--space-24);
+}
+
+.section--tight {
+  padding-block: var(--space-12);
+}
+
+/* Alternating background rhythm [DS §2.7] */
+.section--alt {
+  background-color: var(--bg-surface-alt);
+}
+
+.section--inverse {
+  background-color: var(--bg-inverse);
+  color: var(--color-text-on-dark);
+}
+
+/* =====================================================================
+   Stack utility (vertical rhythm via gap)
+   ===================================================================== */
+
+.stack > * + * {
+  margin-top: var(--space-4);
+}
+
+.stack--sm > * + * { margin-top: var(--space-2); }
+.stack--lg > * + * { margin-top: var(--space-6); }
+
+/* =====================================================================
+   Accessibility helpers
+   ===================================================================== */
+
+/* Visually hidden but available to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Hide visually + from AT */
+.hidden {
+  display: none !important;
+}
+
+/* =====================================================================
+   Prose / measure (long-form text) [DS §3.3]
+   ===================================================================== */
+
+.prose {
+  max-width: 70ch;
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+
+
+/* --- components.css --- */
+/* =====================================================================
+   BrownBarry — components.css
+   ---------------------------------------------------------------------
+   Reusable component styles. [DS §6, UX Spec §13 inventory]
+   Canonical home for every component used on 2+ pages.
+   Shared primitives migrated here from homepage.css (Sprint 3 cleanup):
+   icon, overline, section head/foot, media placeholders, scroll-reveal,
+   pillars, benefits, timeline, terms, compare, accordion, final CTA,
+   footer, navigation drawer.
+   ===================================================================== */
+
+/* =====================================================================
+   Typography utility classes (mapped to tokens)
+   ===================================================================== */
+
+.t-display-1 { font-size: var(--text-display-1); line-height: var(--line-height-display); letter-spacing: var(--tracking-tight); }
+.t-display-2 { font-size: var(--text-display-2); line-height: var(--line-height-display); letter-spacing: var(--tracking-tight); }
+.t-h1        { font-size: var(--text-h1); line-height: var(--line-height-tight); letter-spacing: var(--tracking-heading); }
+.t-h2        { font-size: var(--text-h2); line-height: var(--line-height-tight); letter-spacing: var(--tracking-heading); }
+.t-h3        { font-size: var(--text-h3); line-height: var(--line-height-heading); letter-spacing: var(--tracking-heading); }
+.t-h4        { font-size: var(--text-h4); line-height: var(--line-height-heading); font-family: var(--font-body); }
+.t-body-lg   { font-size: var(--text-body-lg); line-height: var(--line-height-body); }
+.t-body      { font-size: var(--text-base); line-height: var(--line-height-body); }
+.t-body-sm   { font-size: var(--text-body-sm); line-height: 1.55; color: var(--color-text-muted); }
+.t-caption   { font-size: var(--text-caption); line-height: var(--line-height-caption); font-weight: var(--weight-medium); }
+.t-overline  { font-size: var(--text-overline); line-height: var(--line-height-caption); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-overline); text-transform: uppercase; color: var(--color-text-muted); }
+.t-mono      { font-family: var(--font-mono); font-size: var(--text-mono); }
+
+/* =====================================================================
+   Icon primitive (inline SVG sprite refs) [DS §8]
+   ===================================================================== */
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  flex-shrink: 0;
+}
+
+/* =====================================================================
+   Section head / foot primitives [DS §5, UX Spec §4]
+   ===================================================================== */
+
+.overline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-overline);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--cocoa-600);
+  margin-bottom: var(--space-3);
+}
+
+.overline .icon { width: 16px; height: 16px; }
+
+.section-title {
+  font-size: var(--text-h1);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--tracking-heading);
+  max-width: 24ch;
+}
+
+.section-sub {
+  margin-top: var(--space-4);
+  font-size: var(--text-body-lg);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+  max-width: 60ch;
+}
+
+.section-head { max-width: 720px; }
+.section-head.center { margin-inline: auto; text-align: center; }
+
+.section-foot {
+  margin-top: var(--space-10);
+  display: flex;
+  justify-content: center;
+}
+
+/* Inverse section text adjustments */
+.section--inverse .overline { color: var(--cocoa-300); }
+.section--inverse .section-title { color: #FFFFFF; }
+.section--inverse .section-sub { color: var(--stone-300); }
+
+/* =====================================================================
+   Navigation  [DS §6.1, UX Spec C1]
+   Canonical markup: see index.html header (brand + #nav-primary +
+   .nav-actions + .nav-toggle + .nav-backdrop sibling).
+   ===================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background-color: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-fast) var(--ease-out);
+}
+
+body.menu-open .site-header {
+  z-index: var(--z-modal);
+}
+
+/* Scrolled state (added via JS) */
+.site-header.is-scrolled {
+  background-color: var(--bg-surface);
+  box-shadow: var(--elevation-1);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: var(--nav-height-mobile);
+  padding-block: var(--space-2);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 900px) {
+  .brand-logo {
+    height: 52px;
+  }
+}
+
+.nav-primary {
+  display: none; /* hidden on mobile; drawer below, flex ≥900px */
+  list-style: none;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.nav-primary a {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-body-sm);
+}
+
+.nav-primary a:hover { color: var(--cocoa-600); text-decoration: none; }
+.nav-primary a[aria-current="page"] { color: var(--cocoa-800); font-weight: var(--weight-semibold); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.nav-toggle {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+}
+
+/* Mobile navigation drawer */
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  z-index: var(--z-modal);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+
+.nav-backdrop.is-visible { opacity: 1; }
+
+/* Scroll-lock while the drawer is open (toggled by navigation.js) */
+body.menu-open { overflow: hidden; }
+body.menu-open .site-header { z-index: calc(var(--z-modal) + 2); }
+
+@media (max-width: 899px) {
+  .nav-primary {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(82vw, 360px);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-16) var(--space-6) var(--space-8);
+    background: var(--bg-surface);
+    box-shadow: var(--elevation-3);
+    transform: translateX(100%);
+    /* visibility keeps off-canvas links out of the tab order (a11y) */
+    visibility: hidden;
+    transition: transform var(--motion-base) var(--ease-out),
+                visibility 0s var(--ease-out) var(--motion-base);
+    z-index: calc(var(--z-modal) + 1);
+  }
+
+  .nav-primary.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--motion-base) var(--ease-out);
+  }
+
+  /* No-JS fallback: render nav as a static wrapped row (always reachable) */
+  html:not(.js) .site-nav { flex-wrap: wrap; }
+  html:not(.js) .nav-primary {
+    order: 3;
+    display: flex;
+    position: static;
+    visibility: visible;
+    transform: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 0 var(--space-2);
+    gap: var(--space-2) var(--space-4);
+    background: transparent;
+    box-shadow: none;
+  }
+  html:not(.js) .nav-toggle { display: none; }
+  html:not(.js) .nav-primary a { border-bottom: none; padding: var(--space-2) 0; font-size: var(--text-body-sm); }
+
+  .nav-primary li { width: 100%; }
+  html:not(.js) .nav-primary li { width: auto; }
+  .nav-primary a {
+    display: block;
+    padding: var(--space-3) 0;
+    font-size: var(--text-body-lg);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .nav-cta-mobile { margin-top: var(--space-4); }
+  .nav-cta-mobile .btn {
+    width: 100%;
+    background-color: var(--whatsapp-button) !important;
+    color: var(--color-text-on-brand) !important;
+    border: 1px solid var(--whatsapp-button) !important;
+  }
+  .nav-cta-mobile .btn:hover {
+    background-color: var(--whatsapp-hover) !important;
+    border-color: var(--whatsapp-hover) !important;
+  }
+
+  /* Toggle icon swap */
+  .nav-toggle .icon-close { display: none; }
+  .nav-toggle[aria-expanded="true"] .icon-open { display: none; }
+  .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
+  .nav-toggle[aria-expanded="true"] { z-index: calc(var(--z-modal) + 2); }
+
+  /* Compact icon-only WhatsApp CTA in the header */
+  .nav-cta-desktop span { display: none; }
+  .nav-cta-desktop { padding-inline: var(--space-3); }
+}
+
+@media (min-width: 900px) {
+  .nav-primary { display: flex; }
+  .nav-toggle { display: none; }
+  .nav-cta-mobile { display: none; }
+}
+
+/* =====================================================================
+   Buttons  [DS §6.3]
+   ===================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--button-height-mobile);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background-color: var(--cocoa-800);
+  color: var(--color-text-on-brand);
+}
+.btn-primary:hover { background-color: var(--cocoa-700); text-decoration: none; }
+
+.btn-whatsapp {
+  background-color: var(--whatsapp-button);
+  color: var(--color-text-on-brand);
+}
+.btn-whatsapp:hover { background-color: var(--whatsapp-hover); text-decoration: none; }
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--cocoa-800);
+  border-color: var(--border-strong);
+}
+.btn-secondary:hover { background-color: var(--cocoa-50); text-decoration: none; }
+
+/* Button High-Contrast Fix for Dark Sections & Footers */
+.section--inverse .btn-secondary,
+.sample-cta .btn-secondary,
+.cat-hero .btn-secondary,
+.site-footer .btn-secondary,
+.hero--home .btn-secondary,
+.final-cta .btn-secondary {
+  color: #F8F1E9 !important;
+  border-color: rgba(248, 241, 233, 0.45) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.section--inverse .btn-secondary:hover,
+.sample-cta .btn-secondary:hover,
+.cat-hero .btn-secondary:hover,
+.site-footer .btn-secondary:hover,
+.hero--home .btn-secondary:hover,
+.final-cta .btn-secondary:hover {
+  background-color: #D4AF37 !important;
+  color: #1F140C !important;
+  border-color: #D4AF37 !important;
+  text-decoration: none;
+}
+
+
+.btn-text {
+  background: transparent;
+  color: var(--color-link);
+  min-height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+.btn-text:hover { text-decoration: underline; }
+
+.btn-lg { min-height: var(--button-height-desktop); padding: var(--space-3) var(--space-6); font-size: var(--text-base); }
+.btn-sm { min-height: var(--touch-target-min); padding: var(--space-2) var(--space-4); }
+
+/* Mobile full-width — EXCEPT inside the header (audit fix: header overflow) */
+@media (max-width: 599px) {
+  .btn { width: 100%; }
+  .site-nav .btn,
+  .nav-actions .btn { width: auto; }
+}
+
+/* =====================================================================
+   Cards  [DS §6.4]
+   ===================================================================== */
+
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: box-shadow var(--motion-base) var(--ease-out),
+              border-color var(--motion-base) var(--ease-out),
+              transform var(--motion-base) var(--ease-out);
+}
+
+.card--interactive:hover {
+  box-shadow: var(--elevation-1);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.card-media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background-color: var(--bg-sunken);
+}
+
+/* =====================================================================
+   Pillar cards (proof pillars / value cards) [UX Spec §4]
+   ===================================================================== */
+
+.pillars {
+  margin-top: var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.pillar-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  transition: border-color var(--motion-base) var(--ease-out),
+              box-shadow var(--motion-base) var(--ease-out),
+              transform var(--motion-base) var(--ease-out);
+}
+
+.pillar-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--elevation-1);
+  transform: translateY(-2px);
+}
+
+.pillar-icon {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--cocoa-50);
+  color: var(--cocoa-700);
+}
+
+.pillar-icon .icon { width: 24px; height: 24px; }
+
+.pillar-title {
+  margin-top: var(--space-4);
+  font-size: var(--text-h4);
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+}
+
+.pillar-body {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  line-height: var(--line-height-body);
+}
+
+/* =====================================================================
+   Benefit grid (accent-border list cards) [UX Spec §4]
+   ===================================================================== */
+
+.benefit-grid {
+  margin-top: var(--space-12);
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.benefit {
+  padding: var(--space-6);
+  border-left: 3px solid var(--cocoa-300);
+}
+
+.benefit-icon {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--cocoa-50);
+  color: var(--cocoa-700);
+}
+.benefit-icon .icon { width: 22px; height: 22px; }
+
+.benefit-title {
+  margin-top: var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+}
+
+.benefit-body {
+  margin-top: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+/* =====================================================================
+   Category cards (homepage + collections) [UX Spec §5.3]
+   Moved from homepage.css in Sprint 4.
+   ===================================================================== */
+
+.category-grid {
+  margin-top: var(--space-12);
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.cat-card {
+  display: block;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--motion-slow) var(--ease-out-quint),
+              box-shadow var(--motion-slow) var(--ease-out-quint),
+              transform var(--motion-slow) var(--ease-out-quint);
+}
+
+.cat-card:hover {
+  border-color: var(--cocoa-300);
+  box-shadow: var(--elevation-3);
+  transform: translateY(-4px);
+  text-decoration: none;
+}
+
+.cat-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-sunken);
+}
+
+.cat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--motion-slow) var(--ease-out-quint);
+}
+
+.cat-card:hover .cat-img {
+  transform: scale(1.05);
+}
+
+.cat-body { padding: var(--space-6); }
+
+.cat-title {
+  font-size: var(--text-h3);
+  font-family: var(--font-display);
+}
+
+.cat-desc {
+  margin-top: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.cat-specs {
+  margin-top: var(--space-4);
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-body-xs);
+  color: var(--color-text-muted);
+  display: grid;
+  gap: var(--space-1.5);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.cat-specs li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.cat-specs li strong {
+  color: var(--cocoa-800);
+  font-weight: var(--weight-medium);
+}
+
+.cat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--cocoa-700);
+}
+
+.cat-link .icon { width: 18px; height: 18px; }
+.cat-card:hover .cat-link .icon { transform: translateX(2px); transition: transform var(--motion-fast); }
+
+.cat-note {
+  margin-top: var(--space-8);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+}
+.cat-note .icon { width: 18px; height: 18px; color: var(--cocoa-600); }
+
+/* =====================================================================
+   Badges & Tags  [DS §6.9, §6.10]
+   ===================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-caption);
+  border-radius: var(--radius-full);
+}
+
+.badge--verified { background-color: var(--forest-50); color: var(--forest-700); }
+.badge--new      { background-color: var(--cocoa-100); color: var(--cocoa-800); }
+.badge--neutral  { background-color: var(--stone-100); color: var(--stone-700); }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-caption);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.tag--active {
+  background-color: var(--cocoa-800);
+  color: var(--color-text-on-brand);
+  border-color: var(--cocoa-800);
+}
+
+/* =====================================================================
+   Forms & Inputs  [DS §6.5, §6.6]
+   ===================================================================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.input,
+.select,
+.textarea {
+  min-height: var(--input-height);
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.textarea { resize: vertical; min-height: 120px; }
+
+.input::placeholder,
+.textarea::placeholder { color: var(--color-text-subtle); }
+
+.input:hover, .select:hover, .textarea:hover { border-color: var(--border-strong); }
+
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--cocoa-300);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--error);
+  background-color: var(--error-surface);
+}
+
+.help-text { font-size: var(--text-body-sm); color: var(--color-text-muted); }
+.error-text { font-size: var(--text-body-sm); color: var(--error); }
+
+/* =====================================================================
+   Check list (forest checks) [UX Spec §4]
+   ===================================================================== */
+
+.check-list {
+  list-style: none;
+  margin-top: var(--space-8);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.check-list .icon {
+  width: 22px;
+  height: 22px;
+  color: var(--forest-600);
+  margin-top: 2px;
+}
+
+/* =====================================================================
+   Timeline (numbered process steps) [UX Spec §4]
+   ===================================================================== */
+
+.timeline {
+  list-style: none;
+  margin-top: var(--space-12);
+  display: grid;
+  gap: var(--space-6);
+  position: relative;
+}
+
+.timeline-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.step-num {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--cocoa-800);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-body-lg);
+}
+
+.step-title {
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+}
+
+.step-desc {
+  margin-top: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+/* =====================================================================
+   Terms grid (commercial terms: MOQ / payment / dispatch / returns)
+   ===================================================================== */
+
+.how-terms {
+  margin-top: var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.term {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.term .icon { width: 24px; height: 24px; color: var(--cocoa-700); margin-top: 2px; }
+
+.term-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.term-value {
+  font-size: var(--text-base);
+  color: var(--color-text);
+  margin-top: 2px;
+}
+
+/* =====================================================================
+   Compare cards (with-us / typical-experience) [UX Spec §4]
+   ===================================================================== */
+
+.compare {
+  margin-top: var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+.compare-card {
+  padding: var(--space-8) var(--space-8) var(--space-10);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.compare-badge {
+  display: inline-block;
+  font-size: var(--text-overline);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-overline);
+  font-weight: var(--weight-semibold);
+  color: var(--forest-700);
+  background: var(--forest-205); /* Soft fallback/custom tone matching Forest brand */
+  background-color: var(--forest-50);
+  border: 1.5px solid var(--forest-200);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.compare-badge--bad {
+  color: var(--stone-600);
+  background: var(--stone-50);
+  border-color: var(--stone-200);
+}
+
+.compare-card--good {
+  border-color: var(--forest-200);
+  border-top: 6px solid var(--forest-600);
+  background: var(--forest-50);
+  box-shadow: 0 16px 40px rgba(31, 20, 12, 0.03), 0 8px 24px rgba(46, 107, 78, 0.04);
+}
+
+.compare-card--good:hover {
+  transform: translateY(-4px);
+  border-color: var(--forest-600);
+  box-shadow: 0 20px 48px rgba(31, 20, 12, 0.05), 0 12px 32px rgba(46, 107, 78, 0.08);
+}
+
+.compare-card--bad {
+  background: var(--bg-surface);
+  border-top: 6px solid var(--stone-300);
+  opacity: 0.95;
+  box-shadow: 0 4px 16px rgba(31, 20, 12, 0.01);
+}
+
+.compare-card--bad:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(31, 20, 12, 0.03);
+}
+
+.compare-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-6);
+}
+.compare-title .icon { display: none; }
+
+.compare-card--good .compare-title { color: var(--forest-700); }
+.compare-card--bad .compare-title { color: var(--stone-700); }
+
+.compare-card ul {
+  list-style: none;
+  margin-top: var(--space-4);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.compare-card li {
+  position: relative;
+  padding-left: var(--space-8);
+  font-size: var(--text-base);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+}
+
+.compare-card li strong {
+  font-weight: var(--weight-semibold);
+}
+
+.compare-card--good li strong {
+  color: var(--forest-900);
+}
+
+.compare-card--bad li strong {
+  color: var(--stone-800);
+}
+
+.compare-card--good li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.25em;
+  width: 20px; height: 20px;
+  background: var(--forest-200);
+  border-radius: 50%;
+}
+
+.compare-card--good li::after {
+  content: "";
+  position: absolute;
+  left: 6px; top: 0.55em;
+  width: 8px; height: 5px;
+  border-left: 2px solid var(--forest-700);
+  border-bottom: 2px solid var(--forest-700);
+  transform: rotate(-45deg);
+}
+
+.compare-card--bad li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.25em;
+  width: 20px; height: 20px;
+  background: var(--stone-100);
+  border-radius: 50%;
+}
+
+.compare-card--bad li::after {
+  content: "×";
+  position: absolute;
+  left: 0; top: 0.25em;
+  width: 20px; height: 20px;
+  text-align: center;
+  line-height: 18px;
+  font-size: 14px;
+  color: var(--stone-500);
+  font-weight: var(--weight-semibold);
+}
+
+.compare-card--bad { color: var(--color-text-muted); }
+
+/* =====================================================================
+   Accordion / FAQ  [DS §6.11, §6.12]
+   Canonical version (was duplicated in homepage.css — consolidated).
+   Panel visibility uses the [hidden] attribute: a11y-correct, no-JS safe.
+   ===================================================================== */
+
+.accordion { margin-top: var(--space-12); }
+
+.accordion-item {
+  border-bottom: 1px solid var(--border-default);
+}
+.accordion-item:first-child { border-top: 1px solid var(--border-default); }
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.accordion-trigger:hover { color: var(--cocoa-700); }
+
+.accordion-chevron {
+  width: 24px;
+  height: 24px;
+  color: var(--cocoa-600);
+  transition: transform var(--motion-base) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.accordion-trigger[aria-expanded="true"] .accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.accordion-panel {
+  padding-bottom: var(--space-5);
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  line-height: var(--line-height-body);
+  max-width: 70ch;
+}
+
+/* =====================================================================
+   Media placeholders (until real photography lands) [DS §9]
+   Warm, branded, no broken-image icon.
+   ===================================================================== */
+
+.media-ph {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--cocoa-50),
+      var(--cocoa-50) 14px,
+      var(--cocoa-100) 14px,
+      var(--cocoa-100) 28px
+    );
+  border: 1px solid var(--cocoa-200);
+  border-radius: var(--radius-lg);
+  color: var(--cocoa-700);
+  overflow: hidden;
+}
+
+.media-ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(249,244,236,0.6) 100%);
+  pointer-events: none;
+}
+
+.media-ph-label {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-heading);
+  position: relative;
+  z-index: 1;
+}
+
+.media-ph-hint {
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caption);
+  color: var(--cocoa-600);
+  position: relative;
+  z-index: 1;
+}
+
+.media-ph--wide { aspect-ratio: 16 / 10; }
+.media-ph--square { aspect-ratio: 1 / 1; }
+
+/* =====================================================================
+   Scroll-reveal (progressive enhancement) [DS §10, animations.js]
+   ---------------------------------------------------------------------
+   CRITICAL: The hidden pre-reveal state applies ONLY when JS is active
+   (html.js). Without JS, content is fully visible. NEVER change this.
+   ===================================================================== */
+
+/* Default: fully visible (no-JS baseline, print, crawlers, slow JS) */
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+/* JS active: hide pre-reveal, then animate in via .is-revealed */
+html.js [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+html.js [data-reveal] {
+  transition: opacity var(--motion-slow) var(--ease-out-quint),
+              transform var(--motion-slow) var(--ease-out-quint);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reduced motion: never hide, never animate (overrides .js gating) */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  html.js [data-reveal]:not(.is-revealed) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Print: always fully visible */
+@media print {
+  [data-reveal],
+  html.js [data-reveal]:not(.is-revealed) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =====================================================================
+   Final CTA band (dark closing section, used on every page)
+   ===================================================================== */
+
+.final-cta {
+  background: var(--cocoa-900);
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.cta-inner { max-width: 720px; margin-inline: auto; }
+
+.final-cta .overline { color: var(--cocoa-300); }
+
+.cta-title {
+  font-size: var(--text-display-2);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-tight);
+  color: #FFFFFF;
+  max-width: 18ch;
+  margin-inline: auto;
+}
+
+.cta-sub {
+  margin-top: var(--space-4);
+  font-size: var(--text-body-lg);
+  color: var(--stone-300);
+  line-height: var(--line-height-body);
+}
+
+.cta-actions {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.final-cta .btn-secondary {
+  border-color: var(--border-on-dark);
+  color: var(--color-text-on-dark);
+}
+
+.final-cta .btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+}
+
+/* =====================================================================
+   Footer  [DS §6.17]
+   Canonical version (was duplicated in homepage.css — consolidated).
+   ===================================================================== */
+
+.site-footer {
+  background: var(--cocoa-950);
+  color: var(--stone-300);
+  padding-block: var(--space-16) var(--space-8);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  padding-bottom: var(--space-12);
+}
+
+.footer-logo {
+  display: block;
+  width: auto;
+  height: 80px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.footer-tag {
+  margin-top: var(--space-4);
+  font-size: var(--text-body-sm);
+  color: var(--stone-400);
+  max-width: 40ch;
+}
+
+.footer-brand .btn { margin-top: var(--space-6); }
+
+.footer-social {
+  margin-top: var(--space-6);
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--stone-900);
+  border: 1px solid var(--stone-800);
+  color: var(--stone-400);
+  transition: background-color var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out),
+              transform var(--motion-fast) var(--ease-out);
+}
+
+.footer-social-link:hover {
+  background-color: var(--cocoa-800);
+  border-color: var(--cocoa-700);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.footer-social-link .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-col-title {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--cocoa-300);
+  margin-bottom: var(--space-4);
+}
+
+.footer-col ul,
+.footer-contact {
+  list-style: none;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.footer-col a {
+  color: var(--stone-300);
+  font-size: var(--text-body-sm);
+  text-decoration: none;
+}
+.footer-col a:hover { color: #FFFFFF; text-decoration: underline; }
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--stone-300);
+}
+.footer-contact .icon { width: 18px; height: 18px; color: var(--cocoa-400); margin-top: 2px; }
+
+.footer-legal {
+  border-top: 1px solid var(--cocoa-800);
+  padding-top: var(--space-6);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.footer-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  align-items: center;
+}
+.footer-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--stone-400);
+}
+.footer-trust .icon { width: 16px; height: 16px; color: var(--forest-500); }
+.footer-entity { color: var(--stone-300); }
+.footer-entity strong { color: #FFFFFF; font-weight: var(--weight-semibold); }
+
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-meta p { font-size: var(--text-caption); color: var(--stone-400); margin: 0; }
+.footer-meta nav { display: flex; gap: var(--space-4); }
+.footer-meta nav a {
+  font-size: var(--text-caption);
+  color: var(--stone-400);
+  text-decoration: none;
+}
+.footer-meta nav a:hover { color: #FFFFFF; text-decoration: underline; }
+
+/* =====================================================================
+   Floating WhatsApp button (FAB)  [UX Spec §6.3]
+   ===================================================================== */
+
+.whatsapp-fab {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-fab);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background-color: var(--whatsapp-button);
+  color: var(--color-text-on-brand);
+  box-shadow: var(--elevation-2);
+}
+.whatsapp-fab:hover { background-color: var(--whatsapp-hover); text-decoration: none; }
+
+/* =====================================================================
+   States — loading (skeleton), empty, success, error  [DS §6.18–§6.20]
+   ===================================================================== */
+
+.skeleton {
+  background-color: var(--bg-sunken);
+  border-radius: var(--radius-md);
+}
+
+.empty-state,
+.error-state,
+.success-state {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+}
+
+/* =====================================================================
+   Responsive — shared component grids (mobile-first)
+   ===================================================================== */
+
+@media (min-width: 600px) {
+  .pillars { grid-template-columns: repeat(2, 1fr); }
+  .benefit-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-terms { grid-template-columns: repeat(2, 1fr); }
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .pillars { grid-template-columns: repeat(3, 1fr); }
+  .benefit-grid { grid-template-columns: repeat(4, 1fr); }
+  .how-terms { grid-template-columns: repeat(4, 1fr); }
+  .category-grid { grid-template-columns: repeat(4, 1fr); }
+  .timeline { grid-template-columns: repeat(2, 1fr); }
+  .compare { grid-template-columns: 1fr 1fr; align-items: stretch; gap: var(--space-8); }
+
+  .footer-top {
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    gap: var(--space-10);
+  }
+}
+
+@media (min-width: 1200px) {
+  .timeline { grid-template-columns: repeat(4, 1fr); }
+}
+
+
+/* --- homepage.css --- */
+/* =====================================================================
+   BrownBarry — homepage.css
+   ---------------------------------------------------------------------
+   Homepage-ONLY section layouts. Mobile-first. Token-driven.
+   Shared primitives (icon, overline, section head, media-ph, reveal,
+   pillars, benefits, timeline, terms, compare, accordion, final CTA,
+   footer, nav drawer) live in components.css — do NOT redefine here.
+   [DS §4–§6, UX Spec §4]
+   ===================================================================== */
+
+/* =====================================================================
+   1. HERO
+   ===================================================================== */
+
+.hero { padding-top: var(--space-16); padding-bottom: var(--space-16); }
+
+.hero-inner {
+  display: grid;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.hero-title {
+  font-size: var(--text-display-1);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-tight);
+  margin-top: var(--space-4);
+  max-width: 16ch;
+}
+
+.hero-sub {
+  margin-top: var(--space-6);
+  font-size: var(--text-body-lg);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+  max-width: 56ch;
+}
+
+.hero-cta {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.hero-trust {
+  list-style: none;
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+}
+
+.hero-trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--cocoa-700);
+}
+
+.hero-trust .icon { width: 20px; height: 20px; color: var(--forest-600); }
+
+.hero-media {
+  order: -1;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  aspect-ratio: 4/5;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--elevation-2);
+}
+
+.hero-slides {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 6s cubic-bezier(0.1, 0.8, 0.2, 1);
+  z-index: 1;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1.0);
+  z-index: 2;
+}
+
+.hero-slide.prev-active {
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: var(--cocoa-600);
+  z-index: 4;
+  width: 0%;
+}
+
+/* =====================================================================
+   2. TRUST STRIP
+   ===================================================================== */
+
+.trust-strip {
+  padding-block: var(--space-12);
+  background: var(--bg-surface);
+  border-block: 1px solid var(--border-subtle);
+}
+
+.trust-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.trust-item .icon {
+  width: 28px;
+  height: 28px;
+  color: var(--cocoa-700);
+}
+
+.trust-label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.trust-value {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+
+/* =====================================================================
+   4. CATEGORIES — MOVED to components.css (Sprint 4: reused on
+   collections.html). Do not redefine here.
+   ===================================================================== */
+
+/* =====================================================================
+   5. MANUFACTURING
+   ===================================================================== */
+
+.mfg-inner {
+  display: grid;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.mfg-media {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* =====================================================================
+   7. PARTNER BENEFITS (homepage band)
+   ===================================================================== */
+
+.partner-inner { max-width: 100%; }
+
+.partner-cta {
+  margin-top: var(--space-12);
+  display: flex;
+  justify-content: center;
+}
+
+/* =====================================================================
+   8. SAMPLE POLICY (inverse band)
+   ===================================================================== */
+
+.sample { text-align: center; }
+
+.sample-inner {
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.sample-badge {
+  display: inline-flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--cocoa-800);
+  color: #FFFFFF;
+  margin-bottom: var(--space-4);
+}
+.sample-badge .icon { width: 32px; height: 32px; }
+
+.sample .section-title { color: #FFFFFF; max-width: none; margin-inline: auto; }
+.sample .section-sub { color: var(--stone-300); margin-inline: auto; }
+
+.sample-cta { margin-top: var(--space-8); display: flex; justify-content: center; }
+
+.sample-note {
+  margin-top: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--cocoa-300);
+}
+.sample-note .icon { width: 18px; height: 18px; color: var(--forest-500); }
+
+/* ===================================================================== */
+/* RESPONSIVE — homepage sections                                         */
+/* ===================================================================== */
+
+@media (min-width: 600px) {
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .hero { padding-top: var(--space-20); padding-bottom: var(--space-20); }
+  .hero-inner {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: var(--space-16);
+  }
+  .hero-media { order: 0; }
+  .hero-content { order: 0; }
+
+  .trust-grid { grid-template-columns: repeat(5, 1fr); gap: var(--space-4) var(--space-6); }
+
+  .mfg-inner { grid-template-columns: 1fr 1fr; gap: var(--space-16); }
+
+  .sample .section-title { font-size: var(--text-h1); }
+}
+
+@media (min-width: 1200px) {
+  .hero-title { font-size: var(--text-display-1); }
+}
+
+
+/* --- responsive.css --- */
+/* =====================================================================
+   BrownBarry — responsive.css
+   ---------------------------------------------------------------------
+   Cross-cutting breakpoint overrides ONLY. Component-level responsive
+   rules live beside their component (components.css / page CSS).
+   Mobile-first. [DS §4.2, §11]
+   Sprint 3 cleanup: removed dead selectors (.grid--products,
+   .footer-grid) and rules that duplicated components.css.
+   ===================================================================== */
+
+/* ----------------------------------------------------------------------
+   ≥ 1200px / ≥ 1440px — intentionally minimal.
+   Content is capped by .container; ultra-wide gets side whitespace.
+   Premium = restraint, not stretch. [DS §11.3]
+   ---------------------------------------------------------------------- */
+
+/* =====================================================================
+   Hover behaviour — pointer/fine devices only [DS §10.4]
+   ===================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  /* Hover-only refinements go here (already authored on components).
+     This guard prevents hover styles from sticking on touch devices. */
+}
+
+/* =====================================================================
+   Print (basic, for policy pages)
+   ===================================================================== */
+
+@media print {
+  .site-header,
+  .nav-toggle,
+  .nav-backdrop,
+  .whatsapp-fab {
+    display: none !important;
+  }
+
+  body {
+    background: #FFFFFF;
+    color: #000000;
+  }
+}
+
+
+/* --- Base & Resets --- */
+/* =====================================================================
+   BrownBarry — main.css (entry)
+   ---------------------------------------------------------------------
+   Import order matters. Tokens first, then layout, components, last
+   responsive overrides. Do NOT author styles here.
+   ===================================================================== */
+
+
+/* =====================================================================
+   Global resets & base — minimal, token-driven
+   ===================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Respect reduced motion globally (DS §10.7, a11y §12) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  background-color: var(--bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-height-tight);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* =====================================================================
+   Skip link (a11y — first focusable, visually hidden until focused)
+   ===================================================================== */
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface);
+  color: var(--color-text);
+  z-index: 1000;
+  transform: translateY(-150%);
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* =====================================================================
+   Focus visibility (a11y — non-negotiable, DS §12.2)
+   ===================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* TODO: Page-specific styles belong in components.css or per-page classes.
+   Keep this entry file minimal. */

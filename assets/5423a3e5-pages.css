@@ -1,0 +1,763 @@
+/* =====================================================================
+   BrownBarry — pages.css
+   ---------------------------------------------------------------------
+   Sub-page layouts (about, why-brownbarry, become-retail-partner, and
+   future interior pages). Mobile-first. Token-driven.
+   Shared components live in components.css; only page-level layout here.
+   [DS §4–§6, UX Spec §5]
+   ===================================================================== */
+
+/* =====================================================================
+   Page hero (compact interior hero band)
+   ===================================================================== */
+
+.page-hero {
+  padding-block: var(--space-12) var(--space-16);
+  background: var(--bg-surface-alt);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-hero-title {
+  font-size: var(--text-display-2);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-tight);
+  max-width: 20ch;
+}
+
+.page-hero-sub {
+  margin-top: var(--space-4);
+  font-size: var(--text-body-lg);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+  max-width: 60ch;
+}
+
+.page-hero-cta {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  margin-bottom: var(--space-6);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.breadcrumbs li { display: inline-flex; align-items: center; gap: var(--space-2); }
+
+.breadcrumbs li + li::before {
+  content: "/";
+  color: var(--stone-400);
+}
+
+.breadcrumbs a { color: var(--color-text-muted); }
+.breadcrumbs a:hover { color: var(--cocoa-700); }
+.breadcrumbs [aria-current="page"] { color: var(--color-text); font-weight: var(--weight-medium); }
+
+/* =====================================================================
+   Split section (text + media, alternating)
+   ===================================================================== */
+
+.split {
+  display: grid;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.split-media { display: grid; gap: var(--space-4); }
+
+@media (min-width: 900px) {
+  .split { grid-template-columns: 1fr 1fr; gap: var(--space-16); }
+  .split--media-left .split-media { order: -1; }
+}
+
+/* =====================================================================
+   Statement band (single strong paragraph — mission / vision / philosophy)
+   ===================================================================== */
+
+.statement-grid {
+  margin-top: var(--space-12);
+  display: grid;
+  gap: var(--space-6);
+}
+
+.statement {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--cocoa-700);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+}
+
+.statement-label {
+  font-size: var(--text-overline);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--cocoa-600);
+}
+
+.statement-text {
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-text);
+  max-width: 34ch;
+}
+
+@media (min-width: 900px) {
+  .statement-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* =====================================================================
+   Info cards (office, communication, quality facts)
+   ===================================================================== */
+
+.info-grid {
+  margin-top: var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.info-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.info-card .icon { color: var(--cocoa-700); }
+
+.info-card-title {
+  margin-top: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+}
+
+.info-card-body {
+  margin-top: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+@media (min-width: 600px) { .info-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* =====================================================================
+   Journey (about-page milestone list — vertical, honest, no fake dates)
+   ===================================================================== */
+
+.journey {
+  list-style: none;
+  margin-top: var(--space-12);
+  display: grid;
+  gap: 0;
+  max-width: 720px;
+}
+
+.journey-step {
+  position: relative;
+  padding: 0 0 var(--space-8) var(--space-10);
+}
+
+.journey-step::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 6px;
+  bottom: 0;
+  width: 2px;
+  background: var(--cocoa-200);
+}
+
+.journey-step:last-child::before { display: none; }
+
+.journey-step::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: var(--cocoa-700);
+  border: 3px solid var(--cocoa-100);
+}
+
+.journey-title {
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+}
+
+.journey-body {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+  max-width: 60ch;
+}
+
+/* =====================================================================
+   Comparison table (why-brownbarry) — accessible <table>
+   ===================================================================== */
+
+.compare-table-wrap {
+  margin-top: var(--space-12);
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-body-sm);
+  min-width: 560px;
+}
+
+.compare-table caption {
+  text-align: left;
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.compare-table th,
+.compare-table td {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-subtle);
+  line-height: var(--line-height-body);
+}
+
+.compare-table thead th {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: var(--bg-sunken);
+}
+
+.compare-table tbody th {
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  width: 30%;
+}
+
+.compare-table td.is-us { color: var(--forest-700); font-weight: var(--weight-medium); }
+.compare-table td.is-them { color: var(--color-text-muted); }
+
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td { border-bottom: none; }
+
+/* =====================================================================
+   Partner inquiry form
+   ===================================================================== */
+
+.partner-form {
+  margin-top: var(--space-12);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+.form-grid .field--full { grid-column: 1 / -1; }
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.fieldset legend {
+  padding: 0;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-body-sm);
+  color: var(--color-text);
+  min-height: var(--touch-target-min);
+}
+
+.checkbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--cocoa-700);
+}
+
+.form-actions {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.form-note {
+  margin-top: var(--space-4);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.form-note .icon { width: 16px; height: 16px; color: var(--forest-600); margin-top: 2px; }
+
+.optional-mark { color: var(--color-text-subtle); font-weight: var(--weight-regular); }
+
+@media (min-width: 600px) {
+  .partner-form { padding: var(--space-8); }
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* =====================================================================
+   Policy pages (privacy / shipping / returns) — long-form prose
+   ===================================================================== */
+
+.policy-body {
+  max-width: 70ch;
+}
+
+.policy-body h2 {
+  margin-top: var(--space-10);
+  font-size: var(--text-h3);
+  letter-spacing: var(--tracking-heading);
+}
+
+.policy-body h2:first-child { margin-top: 0; }
+
+.policy-body p {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.policy-body ul {
+  list-style: none;
+  margin-top: var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.policy-body ul li {
+  position: relative;
+  padding-left: var(--space-6);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.policy-body ul li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--cocoa-400);
+}
+
+.policy-body strong { color: var(--color-text); }
+
+.policy-updated {
+  margin-top: var(--space-3);
+  font-size: var(--text-caption);
+  color: var(--color-text-subtle);
+}
+
+.policy-summary {
+  margin-top: var(--space-8);
+  padding: var(--space-6);
+  background: var(--forest-50);
+  border: 1px solid var(--forest-200);
+  border-radius: var(--radius-lg);
+  color: var(--forest-900);
+  max-width: 70ch;
+  line-height: var(--line-height-body);
+}
+
+.policy-summary strong { color: var(--forest-900); }
+
+/* =====================================================================
+   404 page
+   ===================================================================== */
+
+.error-hero {
+  padding-block: var(--space-24);
+  text-align: center;
+}
+
+.error-code {
+  font-family: var(--font-display);
+  font-size: var(--text-display-1);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--cocoa-300);
+  line-height: 1;
+}
+
+.error-hero .section-title,
+.error-hero .section-sub {
+  margin-inline: auto;
+}
+
+.error-hero .section-title { margin-top: var(--space-4); }
+
+.error-actions {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+/* =====================================================================
+   Thank-you page
+   ===================================================================== */
+
+.confirm-hero {
+  padding-block: var(--space-20);
+  text-align: center;
+}
+
+.confirm-badge {
+  display: inline-flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--forest-50);
+  border: 1px solid var(--forest-200);
+  color: var(--forest-600);
+  margin-bottom: var(--space-4);
+}
+.confirm-badge .icon { width: 32px; height: 32px; }
+
+.confirm-hero .section-title,
+.confirm-hero .section-sub { margin-inline: auto; }
+
+/* =====================================================================
+   Trust band (registrations block on interior pages)
+   ===================================================================== */
+
+.trust-band {
+  margin-top: var(--space-12);
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  background: var(--bg-surface);
+  border: 1px solid var(--forest-200);
+  border-radius: var(--radius-lg);
+}
+
+.trust-band-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.trust-band-item .icon { width: 26px; height: 26px; color: var(--forest-600); margin-top: 2px; }
+
+.trust-band-label {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.trust-band-value {
+  margin-top: 2px;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+@media (min-width: 900px) {
+  .trust-band { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* =====================================================================
+   FORMS — catalogue request, contact, partner application
+   ===================================================================== */
+
+.form-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  max-width: 640px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+.form-grid--2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+.form-note {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+}
+
+.form-success {
+  display: none;
+  padding: var(--space-6);
+  background: var(--success-surface);
+  border: 1px solid var(--forest-200);
+  border-radius: var(--radius-lg);
+  color: var(--forest-700);
+}
+
+.form-success.is-visible { display: block; }
+
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B4F3A' stroke-width='1.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  padding-right: var(--space-10);
+}
+
+@media (min-width: 600px) {
+  .form-grid--2 { grid-template-columns: 1fr 1fr; }
+}
+
+/* =====================================================================
+   COMPARISON TABLE — why-brownbarry
+   ===================================================================== */
+
+.compare-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-body-sm);
+  min-width: 560px;
+}
+
+.compare-table caption {
+  padding: var(--space-4);
+  text-align: left;
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+
+.compare-table th,
+.compare-table td {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.compare-table thead th {
+  background: var(--bg-surface-alt);
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.compare-table tbody tr:nth-child(even) { background: var(--cocoa-50); }
+.compare-table td:nth-child(2) { color: var(--forest-700); font-weight: var(--weight-medium); }
+.compare-table td:nth-child(3) { color: var(--color-text-muted); }
+
+/* =====================================================================
+   INSIGHTS — article cards + article body
+   ===================================================================== */
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+.insight-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--motion-base) var(--ease-out),
+              box-shadow var(--motion-base) var(--ease-out),
+              transform var(--motion-base) var(--ease-out);
+}
+
+.insight-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--elevation-1);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.insight-card .media-ph { aspect-ratio: 16 / 9; border-radius: 0; border: none; border-bottom: 1px solid var(--cocoa-200); }
+
+.insight-body { padding: var(--space-6); flex-grow: 1; display: flex; flex-direction: column; gap: var(--space-2); }
+
+.insight-tag {
+  align-self: flex-start;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caption);
+  text-transform: uppercase;
+  color: var(--cocoa-600);
+}
+
+.insight-title {
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+}
+
+.insight-excerpt {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+  flex-grow: 1;
+}
+
+.insight-meta {
+  font-size: var(--text-caption);
+  color: var(--stone-500);
+  margin-top: var(--space-2);
+}
+
+/* Article body */
+.article-body {
+  max-width: 70ch;
+  margin-inline: auto;
+}
+
+.article-body p,
+.article-body li { line-height: var(--line-height-body); color: var(--color-text); }
+
+.article-body p + p { margin-top: var(--space-4); }
+.article-body h2 { margin-top: var(--space-10); margin-bottom: var(--space-3); }
+.article-body h3 { margin-top: var(--space-8); margin-bottom: var(--space-3); font-family: var(--font-body); }
+.article-body ul, .article-body ol { padding-left: var(--space-6); margin-top: var(--space-4); }
+.article-body li + li { margin-top: var(--space-2); }
+.article-body blockquote {
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-6);
+  border-left: 3px solid var(--cocoa-300);
+  background: var(--bg-surface-alt);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+.article-body .tldr {
+  background: var(--cocoa-50);
+  border: 1px solid var(--cocoa-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  margin: var(--space-6) 0;
+}
+.article-body .tldr strong { color: var(--cocoa-800); }
+
+@media (min-width: 600px) { .insights-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .insights-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* =====================================================================
+   PROCESS / POLICY DETAIL — how-we-work steps expanded
+   ===================================================================== */
+
+.policy-block {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  margin-top: var(--space-6);
+}
+
+.policy-block h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  margin-bottom: var(--space-4);
+}
+
+.policy-block ul { padding-left: var(--space-6); margin-top: var(--space-3); }
+.policy-block li + li { margin-top: var(--space-2); }
+
+/* =====================================================================
+   WHATSAPP BRIDGE — pre-chat landing
+   ===================================================================== */
+
+.bridge-card {
+  max-width: 560px;
+  margin-inline: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-10);
+  text-align: center;
+}
+
+.bridge-icon {
+  display: inline-flex;
+  width: 72px;
+  height: 72px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--cocoa-50);
+  color: var(--cocoa-700);
+  margin-bottom: var(--space-6);
+}
+.bridge-icon .icon { width: 36px; height: 36px; }
